@@ -16,87 +16,88 @@ bundle gem mygem
 * rspec, guard
 
 ```ruby
-  spec.add_development_dependency "rspec", "~> 3.1"
-  spec.add_development_dependency "guard", "~> 2.12"
-  spec.add_development_dependency "coveralls", "~> 7.10"
+    spec.add_development_dependency "rspec", "~> 3.1"
+    spec.add_development_dependency "guard", "~> 2.12"
+    spec.add_development_dependency "coveralls", "~> 7.10"
 ```
 
 * Rakefile
 
+
 ```ruby
 require 'rspec/core/rake_task'
-# Default directory to look in is `/specs`
-# Run with `rake spec`
 RSpec::Core::RakeTask.new(:spec) do |task|
-  task.rspec_opts = ['--color', '--format', 'nested']
+   	task.rspec_opts = ['--color', '--format', 'nested']
 end
-
 task :default => :spec
 ```
 
+
 * Specs
 
-```ruby
-# mygem_spec.rb
-require 'spec_helper'
+mygem_spec.rb
 
-describe MYGEM do
-	it 'does something' do
-		something cool
+```ruby
+	require 'spec_helper'
+
+	describe MYGEM do
+		it 'does something' do
+			something cool
+		end
 	end
-end
 ```
+spec_helper.rb
 
 ```ruby
-# spec_helper.rb
-require 'coveralls'
-Coveralls.wear!
+	require 'coveralls'
+	Coveralls.wear!
 
-require 'mygem'
+	require 'mygem'
 ```
-* Guard
+
+* Guardfile
 
 ```ruby
-# Guardfile
-guard 'rspec' do
-  # watch /lib/ files
-  watch(%r{^lib/(.+).rb$}) do |m|
-    "spec/#{m[1]}_spec.rb"
-  end
+	guard 'rspec' do
+		# watch /lib/ files
+		watch(%r{^lib/(.+).rb$}) do |m|
+			"spec/#{m[1]}_spec.rb"
+		end
 
-  # watch /spec/ files
-  watch(%r{^spec/(.+).rb$}) do |m|
-    "spec/#{m[1]}.rb"
-  end
-end
+        # watch /spec/ files
+		watch(%r{^spec/(.+).rb$}) do |m|
+			"spec/#{m[1]}.rb"
+		end
+	end
 ```
 
 * Travis
 
 ```
-# .travis.yml
-language: ruby
-cache: bundler
 
-rvm:
-  - jruby
-  - 2.0.0
+    # .travis.yml
+	language: ruby
+	cache: bundler
 
-script: 'bundle exec rake'
+	rvm:
+		- 2.0.0
 
-notifications:
-  email:
-    recipients:
-      - my@email.com
-    on_failure: change
-    on_success: never
+	script: 'bundle exec rake'
+
+	notifications:
+		email:
+			recipients:
+				- my@email.com
+			on_failure: change
+			on_success: never
 ```
 
 * Coveralls
 
 ```
-# .coveralls.yml
-service_name: travis-ci
+
+    # .coveralls.yml
+	service_name: travis-ci
 
 ```
 

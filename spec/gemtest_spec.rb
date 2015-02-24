@@ -1,7 +1,10 @@
 require 'spec_helper'
 
-describe gemtest do
-  it 'does something' do
-    pending 'this will do something'
+
+
+describe '#greet' do
+  it 'Says hello' do
+    test=Gemtest::Test.new
+    expect(test.greet).to eq("Hello!")
   end
 end
